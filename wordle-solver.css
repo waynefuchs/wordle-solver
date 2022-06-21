@@ -31,6 +31,16 @@ main {
     gap: 1em;
 }
 
+.output {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+#output {
+    color: var(--caccent2);
+}
+
 label,
 .label {
     display: inline-block;
@@ -38,22 +48,18 @@ label,
     text-align: right;
 }
 
-.button-container {
-}
-
 input {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
     height: 2em;
+    text-align: center;
 }
 
 input[type="button"] {
     background-color: var(--caccent2);
     padding: 0 2em 0 2em;
-    border: 3px solid var(--caccent1);
-    color: var(--cdark);
+    border: none;
+    color: var(--cmid);
     border-radius: 5px;
-    font-weight: 900;
-}
-
-.output {
-    text-align: center;
+    font-weight: 900;   
 }
