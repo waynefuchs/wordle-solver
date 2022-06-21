@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wordle Solver</title>
+    <script src="wordle-sover.js" defer></script>
+    <link rel="stylesheet" href="wordle-solver.css">
+</head>
+<body>
+    <header>
+        <h1>Wordle Solver</h1>
+        <p>Not so much to cheat as it is to have fun developing a solver.</p>
+    </header>
+    
+    <main>
+        <p id="output"></p>
+        <div>
+            <label for="used">Used Letters:</label>
+            <input type="text" name="used" id="used">
+        </div>
+
+        <div>
+            <label for="good">Good Letters:</label>
+            <input type="text" name="good" id="good">
+        </div>
+
+        <div>
+            <input class="bad-position" size="6" maxlength="6" type="text" name="n0" id="n0">
+            <input class="bad-position" size="6" maxlength="6" type="text" name="n1" id="n1">
+            <input class="bad-position" size="6" maxlength="6" type="text" name="n2" id="n2">
+            <input class="bad-position" size="6" maxlength="6" type="text" name="n3" id="n3">
+            <input class="bad-position" size="6" maxlength="6" type="text" name="n4" id="n4">
+        </div>
+
+        <div>
+            <input class="letter" size="1" maxlength="1" type="text" name="c0" id="c0">
+            <input class="letter" size="1" maxlength="1" type="text" name="c1" id="c1">
+            <input class="letter" size="1" maxlength="1" type="text" name="c2" id="c2">
+            <input class="letter" size="1" maxlength="1" type="text" name="c3" id="c3">
+            <input class="letter" size="1" maxlength="1" type="text" name="c4" id="c4">
+        </div>
+
+        <div>
+            <input type="button" value="recalculate" id="recalculate">
+        </div>
+    </main>
+</body>
+</html>
