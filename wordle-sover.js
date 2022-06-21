@@ -127,3 +127,4 @@ function recalculateNextMove() {
 // Wire Recalculate Button
 recalculate = document.querySelector("#recalculate");
 recalculate.addEventListener("click", recalculateNextMove);
+recalculateNextMove();

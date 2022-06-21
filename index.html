@@ -9,22 +9,26 @@
 <body>
     <header>
         <h1>Wordle Solver</h1>
-        <p>Not so much to cheat as it is to have fun developing a solver.</p>
     </header>
     
     <main>
-        <p id="output"></p>
+
+        <div class="output">
+            <p id="output"></p>
+        </div>
+
         <div>
-            <label for="used">Used Letters:</label>
+            <label for="used">Used Bad Letters:</label>
             <input type="text" name="used" id="used">
         </div>
 
         <div>
-            <label for="good">Good Letters:</label>
+            <label for="good">Used Good Letters:</label>
             <input type="text" name="good" id="good">
         </div>
 
         <div>
+            <div class="label">Letters Out of Position</div>
             <input class="bad-position" size="6" maxlength="6" type="text" name="n0" id="n0">
             <input class="bad-position" size="6" maxlength="6" type="text" name="n1" id="n1">
             <input class="bad-position" size="6" maxlength="6" type="text" name="n2" id="n2">
@@ -33,14 +37,16 @@
         </div>
 
         <div>
-            <input class="letter" size="1" maxlength="1" type="text" name="c0" id="c0">
-            <input class="letter" size="1" maxlength="1" type="text" name="c1" id="c1">
-            <input class="letter" size="1" maxlength="1" type="text" name="c2" id="c2">
-            <input class="letter" size="1" maxlength="1" type="text" name="c3" id="c3">
-            <input class="letter" size="1" maxlength="1" type="text" name="c4" id="c4">
+            <div class="label">Letters in Correct Position</div>
+            <input class="letter" size="6" maxlength="1" type="text" name="c0" id="c0">
+            <input class="letter" size="6" maxlength="1" type="text" name="c1" id="c1">
+            <input class="letter" size="6" maxlength="1" type="text" name="c2" id="c2">
+            <input class="letter" size="6" maxlength="1" type="text" name="c3" id="c3">
+            <input class="letter" size="6" maxlength="1" type="text" name="c4" id="c4">
         </div>
 
-        <div>
+        <div class="button-container">
+            <label for="reclculate">Find Next Move:</label>
             <input type="button" value="recalculate" id="recalculate">
         </div>
     </main>

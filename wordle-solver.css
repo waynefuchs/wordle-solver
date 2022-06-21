@@ -1,5 +1,59 @@
-label {
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;900&display=swap');
+* {
+    font-family: 'Roboto', sans-serif;
+    --caccent1: #798C7A;
+    --caccent2: #A8BFAA;
+    --clight: #F2F2F2;
+    --cmid: #404040;
+    --cdark: #0D0D0D;
+}
+
+body {
     display: flex;
-    flex-direction: row;
-    width: 100px;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cmid);
+    color: var(--clight);
+}
+
+header,
+main {
+    width: 60%;
+}
+
+header {
+    text-align: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+label,
+.label {
+    display: inline-block;
+    width: 12em;
+    text-align: right;
+}
+
+.button-container {
+}
+
+input {
+    height: 2em;
+}
+
+input[type="button"] {
+    background-color: var(--caccent2);
+    padding: 0 2em 0 2em;
+    border: 3px solid var(--caccent1);
+    color: var(--cdark);
+    border-radius: 5px;
+    font-weight: 900;
+}
+
+.output {
+    text-align: center;
 }
