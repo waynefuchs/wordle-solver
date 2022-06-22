@@ -21,17 +21,19 @@
 
         <form>
             <div class="form-container">
-                <label for="badLetters">Used Bad Letters:</label>
+                <label for="badLetters">(Grey) Rejected Letters:</label>
                 <input type="text" name="used" id="badLetters">
             </div>
 
+            <!-- This can still be useful
             <div class="form-container">
                 <label for="good">Used Good Letters:</label>
                 <input type="text" name="good" id="good">
             </div>
+            -->
 
             <div class="form-container">
-                <div class="label">Letters Out of Position</div>
+                <div class="label">(Yellow) Letters Out of Position</div>
                 <div class="letter-container">
                     <input class="bad-position" size="6" maxlength="6" type="text" name="n0" id="n0">
                     <input class="bad-position" size="6" maxlength="6" type="text" name="n1" id="n1">
@@ -42,7 +44,7 @@
             </div>
 
             <div class="form-container" id="good-letters">
-                <label for="good-letters">Letters in Correct Position</label>
+                <label for="good-letters">(Green) Letters in Correct Position</label>
                 <div class="letter-container">
                     <input class="letter" size="6" maxlength="1" type="text" name="c0" id="c0">
                     <input class="letter" size="6" maxlength="1" type="text" name="c1" id="c1">
@@ -52,10 +54,13 @@
                 </div>
             </div>
 
-            <div class="form-container">
+            <div class="button-container">
                 <input type="button" value="Find Next Move" id="recalculate">
+                <input type="button" value="Word Not Accepted" id="notaword">
             </div>
         </form>
     </main>
+
+
 </body>
 </html>

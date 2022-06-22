@@ -65,6 +65,11 @@ form {
     justify-content: center;
     flex-direction: row;
 }
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
 
 input {
     font-family: 'Roboto', sans-serif;
