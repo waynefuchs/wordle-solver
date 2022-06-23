@@ -9,6 +9,9 @@ let badLetterArray = [];
 let goodLetterArray = [];
 let badWordArray = [];
 
+// wire up word-array
+const elementWordArray = document.querySelector("#word-array");
+
 // wire up output
 const output = document.querySelector("#output");
 
@@ -33,6 +36,59 @@ const c1 = document.querySelector("#c1");
 const c2 = document.querySelector("#c2");
 const c3 = document.querySelector("#c3");
 const c4 = document.querySelector("#c4");
+
+
+// Return: element (which must be added to DOM)
+// wordElement: word container (<div>)
+// wordActive: bool determining whether the status can be changed
+// wordArray: an array containing each character
+// wordStatus: an array containing an integer representing what state the user has selected for that character
+//      0: grey
+//      1: yellow
+//      2: green
+function createWord(word) {
+    let wordElement = document.createElement('div');
+    let wordActive = true;
+    let wordArray = word.toLowerCase().split('');
+    let wordStatus = [];
+    wordElement.classList.add('word');
+    for(let x=0; x<wordArray.length; x++) {
+        let characterButton = document.createElement('button');
+        characterButton.classList.add('square');
+        // TODO: Might have to change this to lookup info(?)
+        characterButton.value = wordArray[x];
+        characterButton.textContent = wordArray[x];
+        createCharacterEventListener(characterButton);
+        wordStatus.push(0);
+        wordElement.append(characterButton);
+    }
+    return {
+        wordElement,
+        wordActive,
+        wordArray,
+        wordStatus,
+    };
+}
+
+function characterPushed(e) {
+    console.log(e);
+    const c = e.target.classList;
+    if(c.contains('yellow')) {
+        c.remove('yellow');
+        c.add('green');
+    } else if(c.contains('green')) {
+        c.remove('green');
+    } else {
+        c.add('yellow');
+    }
+}
+
+function createCharacterEventListener(button) {
+    button.addEventListener('click', characterPushed);
+    button.addEventListener('touchstart', characterPushed);
+}
+
+
 
 
 function getBadPosition() {
@@ -136,6 +192,9 @@ function recalculateNextMove() {
     outOfPositionArray = getBadPosition();
     let bestWord = getBestWord(w);
     output.textContent = bestWord.word;
+
+    let newWord = createWord(bestWord.word);
+    elementWordArray.append(newWord.wordElement);
 }
 
 function removeWord() {
