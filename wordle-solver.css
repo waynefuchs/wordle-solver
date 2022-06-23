@@ -92,3 +92,26 @@ input[type="button"] {
 .pad-right {
     padding-right: .5em;
 }
+
+.word {
+    display: flex;
+    gap: 0.25em;
+    justify-content: center;
+    padding-bottom: 1em;
+}
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3em;
+    height: 3em;
+    background-color: gray;
+}
+
+
+.green {
+    background-color: green;
+}
+.yellow {
+    background-color: yellow;
+}
