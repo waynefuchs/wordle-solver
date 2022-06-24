@@ -9,7 +9,7 @@ const G_WRONG_SPOT = "yellow";
 const G_KNOWN_SPOT = "green";
 const G_INVALID = "red";
 let workingWordList = [];
-let grayLetters = [];
+let invalidLetters = [];
 let wrongSpot = [[],[],[],[],[]];
 let knownSpot = [null, null, null, null, null];
 let rejectedWords = [];
@@ -62,12 +62,12 @@ function undoCurrentWord(e) {
 };
 
 function snapshotCurrentWord() {
-    // currentWord.grayLetters = 
+    // currentWord.
 }
 
 function bakeCurrentWord() {
     if(currentWord === null) return;
-    currentWord.updateInvalidLetters(grayLetters);
+    currentWord.updateInvalidLetters(invalidLetters);
     currentWord.updateWrongSpot(wrongSpot);
     currentWord.updateKnownSpot(knownSpot);
     currentWord.disableAllButtons();
@@ -81,7 +81,7 @@ function findBestNextWord() {
         const word = wordObj.word;
         // Go to the next word in the list if:
         // 1. Word contains any letters that are known to be wrong
-        if(hasGrayLetters(word)) continue;
+        if(hasInvalidLetters(word)) continue;
 
         // 2. Word contains any "wrong spot" letters in the known "wrong spot"
         if(hasWrongSpotLetters(word)) continue;
@@ -104,7 +104,7 @@ function makeUIWord(word) {
         2: null,
         3: null,
         4: null,
-        grayLetters: null,
+        invalidLetters: null,
         wrongSpot: null,
         knownSpot: null,
         isInvalidLetter(index) {
@@ -156,9 +156,9 @@ function makeUIWord(word) {
             }
         },
 
-        updateInvalidLetters(grayLetterArray) {
+        updateInvalidLetters(invalidLetterArray) {
             for(let x=0; x<5; x++) {
-                if(this.isInvalidLetter(x)) grayLetterArray.push(this.word[x]);
+                if(this.isInvalidLetter(x)) invalidLetterArray.push(this.word[x]);
             }
         },
 
@@ -240,8 +240,8 @@ function makeWord(word) {
     };
 }
 
-function hasGrayLetters(word) {
-    for(const c of grayLetters) {
+function hasInvalidLetters(word) {
+    for(const c of invalidLetters) {
         if(word.includes((c))) return true;
     }
     return false;
