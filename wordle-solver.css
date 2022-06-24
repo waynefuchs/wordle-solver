@@ -10,6 +10,14 @@
     --clight: #F2F2F2;
     --cmid: #404040;
     --cdark: #0D0D0D;
+
+    /* disable selection */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Old version of Firefox */
+    -ms-user-select: none; /* Internet Explorer or Edge */
+    user-select: none; /* All modern browsers */
 }
 
 body {
@@ -40,6 +48,7 @@ header {
 main {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1em;
 }
 
@@ -51,12 +60,6 @@ main {
 }
 #output {
     color: var(--caccent2);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
 
 .form-container {
@@ -71,8 +74,10 @@ form {
 }
 .button-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: 1em;
+    width: 16em;
 }
 
 input {
@@ -90,7 +95,7 @@ input[type="button"] {
     border: none;
     color: var(--cmid);
     border-radius: 5px;
-    font-weight: 900;   
+    font-weight: 900;
 }
 
 .pad-right {
