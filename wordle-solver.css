@@ -43,7 +43,7 @@ main {
     gap: 1em;
 }
 
-.output {
+.instructions {
     display: flex;
     justify-content: center;
     text-align: center;
