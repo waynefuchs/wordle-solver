@@ -24,7 +24,7 @@ let elements = {
     },
     addEventListener(element, method) {
         this[element].addEventListener('click', method);
-        this[element].addEventListener('touchstart', method);
+//        this[element].addEventListener('touchstart', method);
     },
 }
 
@@ -129,11 +129,11 @@ function makeUIWord(word) {
         },
         addEventListener(index) {
             this[index].addEventListener('click', this.letterButtonPushed);
-            this[index].addEventListener('touchstart', this.letterButtonPushed);
+//            this[index].addEventListener('touchstart', this.letterButtonPushed);
         },
         removeEventListener(index) {
             this[index].removeEventListener('click', this.letterButtonPushed);
-            this[index].removeEventListener('touchstart', this.letterButtonPushed);
+//            this[index].removeEventListener('touchstart', this.letterButtonPushed);
         },
         disableAllButtons() {
             for(let x=0; x<5; x++) {
