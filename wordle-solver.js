@@ -67,7 +67,7 @@ function snapshotCurrentWord() {
 
 function bakeCurrentWord() {
     if(currentWord === null) return;
-    currentWord.updateGrayLetters(grayLetters);
+    currentWord.updateInvalidLetters(grayLetters);
     currentWord.updateWrongSpot(wrongSpot);
     currentWord.updateKnownSpot(knownSpot);
     currentWord.disableAllButtons();
@@ -156,7 +156,7 @@ function makeUIWord(word) {
             }
         },
 
-        updateGrayLetters(grayLetterArray) {
+        updateInvalidLetters(grayLetterArray) {
             for(let x=0; x<5; x++) {
                 if(this.isInvalidLetter(x)) grayLetterArray.push(this.word[x]);
             }
