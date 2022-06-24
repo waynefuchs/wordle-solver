@@ -7,8 +7,9 @@ const charWeights = {"a": 0.11239067055393585, "b": 0.02681304664723032, "c": 0.
 // define globals
 const G_WRONG_SPOT = "yellow";
 const G_KNOWN_SPOT = "green";
+const G_INVALID = "red";
 let workingWordList = [];
-let greyLetters = [];
+let grayLetters = [];
 let wrongSpot = [[],[],[],[],[]];
 let knownSpot = [null, null, null, null, null];
 let rejectedWords = [];
@@ -24,7 +25,6 @@ let elements = {
     },
     addEventListener(element, method) {
         this[element].addEventListener('click', method);
-//        this[element].addEventListener('touchstart', method);
     },
 }
 
@@ -34,6 +34,7 @@ function initialize() {
     elements.add("words", "#word-array");
     elements.add("next-move", "#find-next-move");
     elements.add("not-accepted", "#word-not-accepted");
+    elements.add("undo", "#word-undo");
 
     // load and sort the word list
     workingWordList = cloneMasterWordList();
@@ -42,7 +43,7 @@ function initialize() {
     // wire events
     elements.addEventListener("next-move", getNextWord);
     elements.addEventListener("not-accepted", wordNotAccepted);
-
+    elements.addEventListener("undo", undoCurrentWord);
     
     getNextWord();
     console.log("Initialized.");
@@ -56,9 +57,17 @@ function getNextWord() {
     elements.words.append(newWord);
 }
 
+function undoCurrentWord(e) {
+    console.log(e);
+};
+
+function snapshotCurrentWord() {
+    // currentWord.grayLetters = 
+}
+
 function bakeCurrentWord() {
     if(currentWord === null) return;
-    currentWord.updateGreyLetters(greyLetters);
+    currentWord.updateGrayLetters(grayLetters);
     currentWord.updateWrongSpot(wrongSpot);
     currentWord.updateKnownSpot(knownSpot);
     currentWord.disableAllButtons();
@@ -72,7 +81,7 @@ function findBestNextWord() {
         const word = wordObj.word;
         // Go to the next word in the list if:
         // 1. Word contains any letters that are known to be wrong
-        if(hasGreyLetters(word)) continue;
+        if(hasGrayLetters(word)) continue;
 
         // 2. Word contains any "wrong spot" letters in the known "wrong spot"
         if(hasWrongSpotLetters(word)) continue;
@@ -95,6 +104,9 @@ function makeUIWord(word) {
         2: null,
         3: null,
         4: null,
+        grayLetters: null,
+        wrongSpot: null,
+        knownSpot: null,
         isInvalidLetter(index) {
             if(this[index] === null) return false;
             if(this[index].classList.contains(G_WRONG_SPOT) 
@@ -129,19 +141,22 @@ function makeUIWord(word) {
         },
         addEventListener(index) {
             this[index].addEventListener('click', this.letterButtonPushed);
-//            this[index].addEventListener('touchstart', this.letterButtonPushed);
         },
         removeEventListener(index) {
             this[index].removeEventListener('click', this.letterButtonPushed);
-//            this[index].removeEventListener('touchstart', this.letterButtonPushed);
         },
         disableAllButtons() {
             for(let x=0; x<5; x++) {
                 this.removeEventListener(x);
             }
         },
+        enableAllButtons() {
+            for(let x=0; x<5; x++) {
+                this.addEventListener(x);
+            }
+        },
 
-        updateGreyLetters(grayLetterArray) {
+        updateGrayLetters(grayLetterArray) {
             for(let x=0; x<5; x++) {
                 if(this.isInvalidLetter(x)) grayLetterArray.push(this.word[x]);
             }
@@ -188,7 +203,13 @@ function createWordElement(word) {
 
         // Add the button to the currentWord UI object
         currentWord[x] = characterButton;
-        currentWord.addEventListener(x);
+
+        // activate the button
+        if(word === "#####") {
+            characterButton.classList.add(G_INVALID);
+        } else {
+            currentWord.addEventListener(x);
+        }
 
         // Add an element reference
         currentWord.wordElement = wordElement;
@@ -219,8 +240,8 @@ function makeWord(word) {
     };
 }
 
-function hasGreyLetters(word) {
-    for(const c of greyLetters) {
+function hasGrayLetters(word) {
+    for(const c of grayLetters) {
         if(word.includes((c))) return true;
     }
     return false;
@@ -269,5 +290,3 @@ function wordNotAccepted(e) {
 function setOutput(message) {
     elements.output.textContent = message;
 }
-
-
