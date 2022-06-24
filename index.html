@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wordle Solver</title>
-    <script src="wordle-sover.js" defer></script>
+    <script type="module" src="len5words.js"></script>
+    <script type="module" src="wordle-solver.js" defer></script>
     <link rel="stylesheet" href="wordle-solver.css">
 </head>
 <body>
@@ -14,57 +15,21 @@
     
     <main>
 
-        <div class="output">
-            <h2 class="pad-right">Use this word:</h2><h2 id="output"></h2>
+        <div class="instructions">
+            <h2 class="pad-right">Use this word:</h2>
+            <h2 id="output"></h2>
         </div>
 
+        <!-- where the work happens -->
+        <div class="word-array" id="word-array"></div>
 
-        <form>
-            <div class="form-container">
-                <label for="badLetters">(Grey) Rejected Letters:</label>
-                <input type="text" name="used" id="badLetters">
-            </div>
-
-            <!-- 
-                This can still be useful
-                But more in a testing capacity than true usefulness
-                And it mostly just adds confusion and clutter
-                
-            <div class="form-container">
-                <label for="good">Used Good Letters:</label>
-                <input type="text" name="good" id="good">
-            </div>
-            -->
-
-            <div class="form-container">
-                <div class="label">(Yellow) Letters Out of Position</div>
-                <div class="letter-container">
-                    <input class="bad-position" size="6" maxlength="6" type="text" name="n0" id="n0">
-                    <input class="bad-position" size="6" maxlength="6" type="text" name="n1" id="n1">
-                    <input class="bad-position" size="6" maxlength="6" type="text" name="n2" id="n2">
-                    <input class="bad-position" size="6" maxlength="6" type="text" name="n3" id="n3">
-                    <input class="bad-position" size="6" maxlength="6" type="text" name="n4" id="n4">
-                </div>
-            </div>
-
-            <div class="form-container" id="good-letters">
-                <label for="good-letters">(Green) Letters in Correct Position</label>
-                <div class="letter-container">
-                    <input class="letter" size="6" maxlength="1" type="text" name="c0" id="c0">
-                    <input class="letter" size="6" maxlength="1" type="text" name="c1" id="c1">
-                    <input class="letter" size="6" maxlength="1" type="text" name="c2" id="c2">
-                    <input class="letter" size="6" maxlength="1" type="text" name="c3" id="c3">
-                    <input class="letter" size="6" maxlength="1" type="text" name="c4" id="c4">
-                </div>
-            </div>
-
-            <div class="button-container">
-                <input type="button" value="Find Next Move" id="recalculate">
-                <input type="button" value="Word Not Accepted" id="notaword">
-            </div>
-        </form>
+        <div class="button-container">
+            <input type="button" value="Next Word" id="find-next-move">
+            <input type="button" value="Not Accepted" id="word-not-accepted">
+        </div>
     </main>
 
 
 </body>
 </html>
+

@@ -1,11 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;900&display=swap');
 * {
     font-family: 'Roboto', sans-serif;
+    --cwgreen: #538d4e;
+    --cwyellow: #b59f3b;
+    --cwgray: #3a3a3c;
+ 
     --caccent1: #798C7A;
     --caccent2: #A8BFAA;
     --clight: #F2F2F2;
     --cmid: #404040;
     --cdark: #0D0D0D;
+
+    /* disable selection */
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Old version of Firefox */
+    -ms-user-select: none; /* Internet Explorer or Edge */
+    user-select: none; /* All modern browsers */
 }
 
 body {
@@ -36,10 +48,11 @@ header {
 main {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1em;
 }
 
-.output {
+.instructions {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -47,12 +60,6 @@ main {
 }
 #output {
     color: var(--caccent2);
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 }
 
 .form-container {
@@ -67,8 +74,10 @@ form {
 }
 .button-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: 1em;
+    width: 16em;
 }
 
 input {
@@ -86,9 +95,44 @@ input[type="button"] {
     border: none;
     color: var(--cmid);
     border-radius: 5px;
-    font-weight: 900;   
+    font-weight: 900;
 }
 
 .pad-right {
     padding-right: .5em;
+}
+
+.word {
+    display: flex;
+    gap: 0.25em;
+    justify-content: center;
+    padding-bottom: 1em;
+}
+.square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3em;
+    height: 3em;
+    background-color: var(--cwgray);
+	font: inherit;
+    font-weight: 900;
+
+	/* button reset
+    background: none; */
+	color: inherit;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	outline: inherit;
+}
+
+
+.green {
+    color: var(--clight);
+    background-color: var(--cwgreen);
+}
+.yellow {
+    color: var(--clight);
+    background-color: var(--cwyellow);
 }
