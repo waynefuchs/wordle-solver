@@ -1,6 +1,5 @@
 // TODO:
-//
-// * Add support for multiple letter selection - as in: double-l in 'hello'
+// 1. Add support for duplicate letter selection for 'wrong spot' / yellow letters - as in the double-l in 'hello'
 
 import masterWordList from './len5words.js';
 let workingWordList = []; // <-- calculated every time to save bandwidth (~200k every page load) at the cost of CPU cycles
