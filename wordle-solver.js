@@ -173,9 +173,15 @@ function findBestNextWord() {
         // 2. Word contains any "wrong spot" letters in the known "wrong spot"
         if(hasWrongSpotLetters(word)) continue;
 
-        // 3. Word contains an incorrect letter in a "known spot"
-        // 4. Word must match "known spot" letters (This is implied)
+        // 3. There must be a maximum of 5 wrong spot letters
+        if(getAllWrongSpotLetters().length > 5) break;
+
+        // 4. Word must contain ALL "wrong spot" letters
+        if(!hasAllWrongSpotLetters(word)) continue;
+
+        // 5. Word contains an incorrect letter in a "known spot"
         if(hasIncorrectLetterInKnownSpot(word)) continue;
+        // 6. Word must match "known spot" letters (This is implied by 5.)
 
         return wordObj;
     }
@@ -306,6 +312,25 @@ function hasIncorrectLetterInKnownSpot(word) {
         if(knownSpot[x] !== word[x]) return true;
     }
     return false;
+}
+
+function hasAllWrongSpotLetters(word) {
+    const letters = getAllWrongSpotLetters();
+    for(const c of letters) {
+        if(!word.includes(c)) return false;
+    }
+    return true;
+}
+
+function getAllWrongSpotLetters() {
+    let letters = [];
+    for(const letterGroup of wrongSpot) {
+        for(const c of letterGroup) {
+            if(letters.includes(c)) continue;
+            letters.push(c);
+        }
+    }
+    return letters;
 }
 
 function removeWordFromWorkingWordList(word) {

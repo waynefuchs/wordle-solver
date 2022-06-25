@@ -4,7 +4,7 @@
     --cwgreen: #538d4e;
     --cwyellow: #b59f3b;
     --cwgray: #3a3a3c;
-    --cwinvalid: #CB4C4E;
+    --cwinvalid: #CB8C8E;
  
     --caccent1: #798C7A;
     --caccent2: #A8BFAA;
@@ -140,5 +140,5 @@ input[type="button"] {
     background-color: var(--cwyellow);
 }
 .red {
-    background-color: var(--cwinvalid);
+    background-color: var(--cwinvalid) !important;
 }
