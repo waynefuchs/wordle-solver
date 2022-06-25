@@ -275,6 +275,7 @@ function createWordElement(word) {
 
         // Auto-set the color if known
         if(isKnownSpot(x)) characterButton.classList.add(G_KNOWN_SPOT);
+        // TODO: Add yellow selection here
 
         // Add the button to the containing div
         wordElement.append(characterButton);

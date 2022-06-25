@@ -12,6 +12,8 @@
     --cmid: #404040;
     --cdark: #0D0D0D;
 
+    touch-action: none;
+
     /* disable selection */
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -54,10 +56,13 @@ main {
 }
 
 .instructions {
-    display: flex;
+    display: none;
+
+/*    display: flex;
     justify-content: center;
     text-align: center;
     align-items: center;
+*/
 }
 #output {
     color: var(--caccent2);
@@ -92,6 +97,8 @@ input {
 }
 
 input[type="button"] {
+    touch-action: none;
+
     background-color: var(--caccent2);
     padding: 0 2em 0 2em;
     border: none;
