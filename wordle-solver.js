@@ -1,3 +1,7 @@
+// TODO:
+//
+// * Add support for multiple letter selection - as in: double-l in 'hello'
+
 import masterWordList from './len5words.js';
 let workingWordList = []; // <-- calculated every time to save bandwidth (~200k every page load) at the cost of CPU cycles
 const cloneMasterWordList = () => masterWordList.map((x) => makeWord(x));
@@ -270,6 +274,9 @@ function createWordElement(word) {
             uiWord.addEventListener(x);
         }
 
+        // Auto-set the color if known
+        if(isKnownSpot(x)) characterButton.classList.add(G_KNOWN_SPOT);
+
         // Add the button to the containing div
         wordElement.append(characterButton);
     }
@@ -331,6 +338,10 @@ function getAllWrongSpotLetters() {
         }
     }
     return letters;
+}
+
+function isKnownSpot(index) {
+    return knownSpot[index] !== null;
 }
 
 function removeWordFromWorkingWordList(word) {
