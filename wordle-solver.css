@@ -12,7 +12,7 @@
     --cmid: #404040;
     --cdark: #0D0D0D;
 
-    touch-action: none;
+    /* touch-action: none; */
 
     /* disable selection */
     -webkit-touch-callout: none; /* iOS Safari */
@@ -94,6 +94,10 @@ input {
     font-size: 1.2em;
     height: 2em;
     padding: 0;
+}
+
+div {
+    touch-action: none;
 }
 
 input[type="button"] {
