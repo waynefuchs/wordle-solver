@@ -1,6 +1,3 @@
-// TODO:
-// 1. Add support for duplicate letter selection for 'wrong spot' / yellow letters - as in the double-l in 'hello'
-
 import masterWordList from './len5words.js';
 let workingWordList = []; // <-- calculated every time to save bandwidth (~200k every page load) at the cost of CPU cycles
 const cloneMasterWordList = () => masterWordList.map((x) => makeWord(x));
@@ -39,6 +36,10 @@ let elements = {
 let invalidLetters = [];
 // represented by yellow letters
 let wrongSpot = [[],[],[],[],[]];
+
+// represented by yellow letters (for auto-marking color)
+let mustIncludeYellow = [];
+
 // represented by green letters
 let knownSpot = [null, null, null, null, null];
 
@@ -120,6 +121,7 @@ function bakeCurrentWord() {
     if(currentWord === null) return;
     bakeInvalidLetters(invalidLetters);
     bakeWrongSpot(wrongSpot);
+    bakeMustIncludeYellow(mustIncludeYellow);
     bakeKnownSpot(knownSpot);
     currentWord.disableAllButtons();
 
@@ -150,6 +152,15 @@ function bakeWrongSpot(wrongSpotReference) {
         // push the character into the array, if it has the G_WRONG_SPOT class applied to the button
         if(currentWord.isWrongSpot(x)) wrongSpotReference[x].push(character);
     }
+}
+
+function bakeMustIncludeYellow(mustIncludeYellowReference) {
+    // clone mustIncludeYellow and store into currentWord.mustIncludeYellow
+    const backupMustIncludeYellow = JSON.stringify(mustIncludeYellowReference);
+    currentWord.mustIncludeYellow = JSON.parse(backupMustIncludeYellow);
+    mustIncludeYellow = [];
+
+    for(let x=0; x<currentWord.word.length; x++) if(currentWord.isWrongSpot(x)) mustIncludeYellow.push(currentWord.word[x]);
 }
 
 function bakeKnownSpot(knownSpotReference) {
@@ -203,6 +214,7 @@ function makeUIWord(word) {
         4: null,
         invalidLetters: null,
         wrongSpot: null,
+        mustIncludeYellow: null,
         knownSpot: null,
         isInvalidLetter(index) {
             if(this[index] === null) return false;
@@ -257,6 +269,10 @@ function createWordElement(word) {
     let wordArray = word.toLowerCase().split('');
     wordElement.classList.add('word');
 
+    // clone mustIncludeYellow
+    const backupMustIncludeYellowString = JSON.stringify(mustIncludeYellow);
+    const backupMustIncludeYellow = JSON.parse(backupMustIncludeYellowString);
+
     // Create each letter button
     for(let x=0; x<wordArray.length; x++) {
         let characterButton = document.createElement('button');
@@ -274,8 +290,14 @@ function createWordElement(word) {
         }
 
         // Auto-set the color if known
+        // Auto-set Green
         if(isKnownSpot(x)) characterButton.classList.add(G_KNOWN_SPOT);
-        // TODO: Add yellow selection here
+        // Auto-set Yellow
+        else if(mustIncludeYellow.includes(word[x])) {
+            const index = mustIncludeYellow.indexOf(word[x]);
+            mustIncludeYellow.splice(index, 1);
+            characterButton.classList.add(G_WRONG_SPOT);
+        }
 
         // Add the button to the containing div
         wordElement.append(characterButton);

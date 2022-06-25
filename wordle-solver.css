@@ -137,6 +137,9 @@ input[type="button"] {
 	outline: inherit;
 }
 
+.not-accepted {
+    display: none;
+}
 
 .green {
     color: var(--clight);
