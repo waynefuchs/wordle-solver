@@ -61,6 +61,7 @@ main {
 }
 #output {
     color: var(--caccent2);
+    text-transform: uppercase;
 }
 
 .form-container {

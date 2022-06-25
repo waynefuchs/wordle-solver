@@ -20,13 +20,11 @@ let currentWord = null;
 // Make element lookup and handling cleaner
 // I prefer having a single object that stores DOM elements instead of 
 // a bunch of random global variables to keep track of.
+// See below: initialize()
 let elements = {
     add(name, selector) {
         this[name] = document.querySelector(selector);
-        if(this[name] === null) {
-            console.error("Failed to add " + name + ":" + selector);
-            delete this[name];
-        }
+        if(this[name] === null) delete this[name];
     },
     addEventListener(element, method) {
         this[element].addEventListener('click', method);
@@ -59,21 +57,36 @@ function initialize() {
     elements.addEventListener("undo", undoCurrentWord);
     
     getNextWord();
-    console.log("Initialized.");
 } initialize();
 
 function getNextWord() {
+    // bake the last word
     bakeCurrentWord();
+
+    // Search for the next best word
     var suggestion = findBestNextWord();
-    setOutput(suggestion.word);
+
+    // Create an element to display
     let newWord = createWordElement(suggestion.word);
-    elements.words.append(newWord);
+
+    // set the current word
+    currentWord = newWord;
+
+    // Handle UI changes
+    elements.words.append(newWord.wordElement);
+    setOutput(suggestion.word);
+    setUndoUIStatus();
+}
+
+function setUndoUIStatus() {
+    if(previousWords.length >= 1) elements.undo.style.visibility="visible";
+    else elements.undo.style.visibility="hidden";
 }
 
 function undoCurrentWord(e) {
     // Roll the display back
-    const word = previousWords.pop();
     currentWord.wordElement.remove();
+    const word = previousWords.pop();
     currentWord = word;
 
     // Roll baked data back
@@ -84,19 +97,31 @@ function undoCurrentWord(e) {
     knownSpot = currentWord.knownSpot;
     currentWord.knownSpot = null;
 
+    // Set the output to the selected word
+    setOutput(currentWord.word);
+
+    // check whether the Undo button should be shown
+    setUndoUIStatus();
+
     // Enable Button Clicks
     currentWord.enableAllButtons();
 };
 
 function bakeCurrentWord() {
     if(currentWord === null) return;
+
+    // push the buttons into an array in case I need to undo
+    previousWords.push(currentWord);
+
+    // bake search criteria
+    if(currentWord === null) return;
     bakeInvalidLetters(invalidLetters);
     bakeWrongSpot(wrongSpot);
     bakeKnownSpot(knownSpot);
     currentWord.disableAllButtons();
 
-    // push the buttons into an array in case I need to undo
-    previousWords.push(currentWord);
+    // clear the reference to the current word
+    currentWord = null;
 }
 
 
@@ -134,7 +159,7 @@ function bakeKnownSpot(knownSpotReference) {
         // continue to the next character if I already know the letter in this position...
         if(knownSpotReference[x] !== null) continue;
         // assign the letter, if the user has set it to 'known'
-        if(currentWord.isKnownSpot(x)) knownSpot[x] = word[x];
+        if(currentWord.isKnownSpot(x)) knownSpot[x] = currentWord.word[x];
     }
 }
 
@@ -185,10 +210,7 @@ function makeUIWord(word) {
             return this[index].classList.contains(G_KNOWN_SPOT);
         },
         getIndex(button) {
-            for(let x=0; x<5; x++) {
-                if(button === this[x]) return x;
-            }
-            console.error("Button not found in object!");
+            for(let x=0; x<5; x++) if(button === this[x]) return x;
             return -1;
         },
         letterButtonPushed(e) {
@@ -209,23 +231,17 @@ function makeUIWord(word) {
             this[index].removeEventListener('click', this.letterButtonPushed);
         },
         disableAllButtons() {
-            for(let x=0; x<5; x++) {
-                this.removeEventListener(x);
-            }
+            for(let x=0; x<5; x++) this.removeEventListener(x);
         },
         enableAllButtons() {
-            for(let x=0; x<5; x++) {
-                this.addEventListener(x);
-            }
+            for(let x=0; x<5; x++) this.addEventListener(x);
         },
     }
 }
 
 function createWordElement(word) {
-    // Push current word onto undo stack, if applicable
-    bakeCurrentWord();
     // get a new UI object
-    currentWord = makeUIWord(word);
+    let uiWord = makeUIWord(word);
 
     // Create the containing div
     let wordElement = document.createElement('div');
@@ -238,23 +254,23 @@ function createWordElement(word) {
         characterButton.classList.add('square');
         characterButton.textContent = wordArray[x];
 
-        // Add the button to the currentWord UI object
-        currentWord[x] = characterButton;
+        // Add the button to the uiWord object
+        uiWord[x] = characterButton;
 
         // activate the button
         if(word === "#####") {
             characterButton.classList.add(G_INVALID);
         } else {
-            currentWord.addEventListener(x);
+            uiWord.addEventListener(x);
         }
-
-        // Add an element reference
-        currentWord.wordElement = wordElement;
 
         // Add the button to the containing div
         wordElement.append(characterButton);
     }
-    return wordElement;
+    // Add an element reference
+    uiWord.wordElement = wordElement;
+
+    return uiWord;
 }
 
 function getWordValue(word) {
@@ -302,8 +318,6 @@ function removeWordFromWorkingWordList(word) {
 }
 
 function wordNotAccepted(e) {
-    console.log(e);
-
     const word = currentWord.word;
     // reject the word and remove it from the working list
     rejectedWords.push(word);
